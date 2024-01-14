@@ -1,0 +1,102 @@
+// Accessing the HTML root div element
+const app = document.getElementById("app");
+
+//Initial Markdown Element
+const initialMarkdown = `
+# Welcome To My Markdown Previewer!
+
+#### We will go over all of the syntax below...
+#### then you may try it out on your own!
+
+# Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
+
+### Text Decor
+*italic*
+**bold**
+***italic and bold***
+
+### Unordered
+- Item
+- Item
+- Item
+
+### Ordered
+1. Item
+1. Item
+1. Item
+##Note, you can use any number for these!!
+
+### Block Quote
+>Do or do not, there is no try
+
+### Links
+[Youtube](https://www.youtube.com)
+[Facebook](https://www.facebook.com)
+[LinkedIn](https://www.linkedin.com)
+
+### Images
+![Philippians 4:7](philippians_4.7.jpg)
+
+### Code
+\`System.out.println("Hello World");\`
+
+### Code Block
+\`\`\`
+public static void main(String args[]){
+  System.out.println("How are you?");
+}
+\`\`\`
+`;
+
+marked.setOptions({
+  breaks: true
+});
+
+//React
+
+//Component
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: initialMarkdown
+    };
+    this.handleChange(this.handleChange.bind(this));
+  }
+  handleChange(event) {
+    try {
+      this.setState({
+        input: event.target.value
+      });
+    } catch (e) {}
+  }
+  render() {
+    return (
+      <div>
+        <div className="input">
+          <div className="header">Editor</div>
+          <textarea
+            id="editor"
+            value={this.state.input}
+            onChange={this.handleChange}
+          ></textarea>
+        </div>
+        <div className="output">
+          <div className="header">Preview</div>
+          <div
+            id="preview"
+            dangerouslySetInnerHTML={{ __html: marked(this.state.input) }}
+          ></div>
+        </div>
+      </div>
+    );
+  }
+}
+
+//Rendering to HTML
+ReactDOM.render(<App />, document.getElementById("app"));
